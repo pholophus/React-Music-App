@@ -1,14 +1,12 @@
 import React,{useState, useEffect} from 'react';
-import { List, Avatar, Space } from 'antd';
-import { MessageOutlined, LikeOutlined, StarOutlined, UserOutlined } from '@ant-design/icons';
-import { BrowserRouter as Router, Link, useParams} from 'react-router-dom';
+import { List, Card } from 'antd';
+import { BrowserRouter as Router, Link} from 'react-router-dom';
 import ReactAudioPlayer from 'react-audio-player';
+import '../songlist.css';
 
 function Songlist (match) {
     let keyword = match.match.params.q;
     const [songs, setSongs] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [error, setError] = useState(null);
 
     //console.log("test "+match.params.q);
     useEffect(() => {
@@ -22,7 +20,6 @@ function Songlist (match) {
         }).then(res => res.json())
             .then(
                 (result) => {
-                    setIsLoaded(true);
                     setSongs(result.data);
                     //console.log(keyword);
                 }
@@ -31,33 +28,39 @@ function Songlist (match) {
     }
     , [keyword]);
 
-      
-
-      if (error) {
-        return <div>Error: {error.message}</div>;
-      }else {
         return (
-            <div>
+            <div className="songlist">
+
+                <span style={{position:"relative", top:"10px", fontSize:"28px", color:"#a8aaba", fontFamily:"Andale Mono, monospace"}}>Results for {keyword}</span>
                 <List
-                    itemLayout="vertical"
-                    size="large"
+                    grid={{ gutter: 4, xs: 1,
+                        sm: 2,
+                        md: 4,
+                        lg: 4,
+                        xl: 5,
+                        xxl: 3, }}
+                        pagination={{
+                            onChange: page => {
+                              console.log(page);
+                            },
+                            pageSize: 8,
+                          }}
                     dataSource={songs}
                     renderItem={item => (
-                    <List.Item
-                        key={item.id} 
-                    >
-                        <List.Item.Meta
-                        avatar={<Avatar style={{marginLeft: "270px"}} size={140} icon={<UserOutlined />} src={item.artist.picture}/>}
-                        title={<Link style={{marginRight: "420px", fontSize: "24px"}} to={`/artist/${item.artist.id}`}>{item.artist.name}</Link>}
-                        description={<span style={{marginRight: "420px", fontSize: "16px"}}>{item.title}</span>}
-                        />
-                        <ReactAudioPlayer src={item.preview} controls/><br/>
+                    <List.Item>
+                        <Card bodyStyle={{textAlign:"left"}} style={{marginLeft:"20px", marginTop:"20px",width: 160, backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0 }} cover={<img src={item.artist.picture} style={{height: "160px"}}/>}>
+                            <Link className="link-songlist" to={`/artist/${item.artist.id}`}>{item.artist.name}</Link>
+                            <br/>
+                            <span style={{ fontSize:"1em", color:"#b6b8b6", }}>{item.title}</span>
+                            <ReactAudioPlayer style={{width: "140px", height:"30px", position:"relative", top:"5px"}} src={item.preview} controls/>
+                        </Card>
                     </List.Item>
                     )}
-                />       
+                />
+                      
             </div>
         );
-      }
+      
 }
 
 export default Songlist

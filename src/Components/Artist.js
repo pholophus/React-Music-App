@@ -1,17 +1,13 @@
 import React,{useState, useEffect} from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Card, Avatar } from 'antd';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { Avatar, Row, Col, Divider, List } from 'antd';
 import ReactAudioPlayer from 'react-audio-player';
 
 function Artist ({match}) {
 
-    const { Meta } = Card;
     const [keyword, setKeyword] = useState("");
     const [artist, setArtist] = useState([]);
     const [songs, setSongs] = useState([]);
-    const [error, setError] = useState(null);
-    console.log(match);
+    //console.log(songs[0]);
 
     useEffect(() => {
           fetch(`https://deezerdevs-deezer.p.rapidapi.com/artist/${match.params.id}`, {
@@ -49,38 +45,54 @@ function Artist ({match}) {
     }
     , [keyword]);
 
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        }else{
+        
           return(
             <div>
-            <Card
-                style={{ width: 500, marginLeft: "400px" }}
-                bordered={false}
-            >
-                <Meta
-                avatar={<Avatar size={160} src={artist.picture} />}
-                title={<span style={{fontSize: "26px"}}>{artist.name}</span>}
-                description={<h3 style={{fontSize: "18px"}}>{artist.nb_fan} <span style={{color:"grey"}}>fans</span></h3>}
-                />
-            </Card>
+                <div style={{backgroundImage: "linear-gradient( #4f5250, #1b1c1c)" }}>
+                    <Row justify="center" align="middle" >
+                        <Col span={4}>
+                            <Avatar src={artist.picture} size={180} style={{top:"15px"}}/>
+                        </Col>
+                        <Col style={{marginRight: "100px", top:"20px"}} span={4}>
+                            <h1 style={{fontSize:"30px",  color:"white", top:"15px"}}>{artist.name}</h1>
+                            <h3 style={{fontSize:"20px", color:"white"}}>{artist.nb_album} <span style={{color:"#b6b8b6"}}>albums</span></h3>
+                            <h3 style={{fontSize:"20px", color:"white"}}>{artist.nb_fan} <span style={{color:"#b6b8b6"}}>fans </span></h3>
+                        </Col>
+                    </Row>
+                    <Divider orientation="center" style={{ color: '#333', fontWeight: 'bold', fontSize: "24px" }}>
+                    Tracks
+                </Divider>
+                </div>
 
-            <img src={artist.picture}/>
-            <h1>{artist.name}</h1>
-            <h3>No of albums are {artist.nb_album}</h3>
-            <h5>Tracks</h5>
-            <ul>
-                {songs.map(song => (
-                    <li key={song.id} style={{paddingBottom : "35px"}}>
-                        <span>{song.title}</span><br/>
-                        <br/><ReactAudioPlayer src={song.preview} controls/>
-                    </li>
-                ))}
-            </ul>        
+                <div style={{backgroundColor: "#1b1c1c", height:"75vh"}}>
+                <List
+                    grid={{
+                        gutter: [16, 48],
+                        xs: 1,
+                        sm: 2,
+                        md: 2,
+                        lg: 3,
+                        xl: 3,
+                        xxl: 3,
+                    }}
+                    pagination={{
+                        onChange: page => {
+                          console.log(page);
+                        },
+                        pageSize: 6,
+                      }}
+                    dataSource={songs}
+                    renderItem={item => (
+                        <List.Item>
+                            <h2 style={{color:"#b6b8b6"}}>{item.title}</h2>
+                            <ReactAudioPlayer  style={{width: "150px", height:"35px", position:"relative", top:"5px"}} src={item.preview} controls/>
+                        </List.Item>
+                    )}
+                />
+                </div> 
+                  
           </div>
           )
         }
-
-}
 
 export default Artist
