@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Songlist from './Components/Songlist';
 import Home from './Components/Home';
 import Artist from './Components/Artist';
-import { Button, Input, Menu, Layout } from 'antd';
-import { PlayCircleTwoTone, CustomerServiceTwoTone, SmileTwoTone  } from '@ant-design/icons';
+import { Button, Input, Menu, Layout,  Divider  } from 'antd';
+import { PlayCircleTwoTone, CustomerServiceTwoTone, SmileTwoTone, DownloadOutlined  } from '@ant-design/icons';
 import './App.css';
 
 function App() {
@@ -27,20 +27,39 @@ function App() {
             <Header className="header" >
                 <Menu mode="horizontal" theme="dark" >
                     <Item className="customclass">
-                    <span style={{color: "white", position:"relative" , top:"-5px", fontSize:"36px", fontWeight:'bold'}}>UPBEAT</span>
+                      <Link to={`/`} style={{color: "white", position:"relative" , left:"-25px", top:"-5px", fontSize:"36px", fontWeight:'bold'}}>UPBEAT
+                      </Link>
                     </Item>
                     <Item className="customclass">
-                    <Input 
-                        onChange={handleChange} 
-                        value={search} 
-                        size="large"
-                        placeholder="Search songs, artist, albums"
-                        style={{ width: 300,  position: "relative", top:"-10px"  }}
-                    />
-                    <Button size="large" style={{position: "relative", top:"-10px"}}>
-                        <Link onClick={handleClick} to={`/songlist/${search}`} style={{color: "black", }}>Search
-                        </Link>
-                    </Button>
+                      <Input 
+                          onChange={handleChange} 
+                          value={search} 
+                          size="large"
+                          placeholder="Search songs, artist, albums"
+                          style={{ width: 300,  position: "relative", top:"-10px"  }}
+                      />
+                      <Button size="large" style={{position: "relative", top:"-10px"}}>
+                          <Link onClick={handleClick} to={`/songlist/${search}`} style={{color: "black", }}>Search
+                          </Link>
+                      </Button>
+                    </Item>
+                    <Item className="customclass">
+                      <Button type="primary" shape="round" icon={<DownloadOutlined style={{fontSize:"20px"}}/>} size="large" 
+                              style={{position: "relative", top:"-10px" ,color:"black", right:"-145px"}}>
+                        Get UPBEAT Desktop App
+                      </Button>
+                    </Item>
+                    <Item className="customclass">
+                      <Button type="primary" shape="round" size="large" 
+                              style={{position: "relative", top:"-10px" ,color:"black", right:"-145px"}}>
+                        Login
+                      </Button>
+                    </Item>
+                    <Item className="customclass">
+                      <Button type="primary" shape="round" size="large" 
+                              style={{position: "relative", top:"-10px" ,color:"black", right:"-130px"}}>
+                        Signup
+                      </Button>
                     </Item>
                 </Menu>
             </Header>

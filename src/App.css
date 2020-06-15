@@ -42,6 +42,9 @@
   background-color: transparent; /*Overriden property*/
 }
 
+.ant-input__placeholder{
+  color : rgb(38, 38, 43);
+}
 input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #484a48;
   opacity: 1; /* Firefox */

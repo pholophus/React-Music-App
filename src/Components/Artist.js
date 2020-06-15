@@ -51,7 +51,7 @@ function Artist ({match}) {
                 <div style={{backgroundImage: "linear-gradient( #4f5250, #1b1c1c)" }}>
                     <Row justify="center" align="middle" >
                         <Col span={4}>
-                            <Avatar src={artist.picture} size={180} style={{top:"15px"}}/>
+                            <Avatar src={artist.picture_medium} size={180} style={{top:"15px"}}/>
                         </Col>
                         <Col style={{marginRight: "100px", top:"20px"}} span={4}>
                             <h1 style={{fontSize:"30px",  color:"white", top:"15px"}}>{artist.name}</h1>

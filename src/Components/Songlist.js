@@ -48,7 +48,7 @@ function Songlist (match) {
                     dataSource={songs}
                     renderItem={item => (
                     <List.Item>
-                        <Card bodyStyle={{textAlign:"left"}} style={{marginLeft:"20px", marginTop:"20px",width: 160, backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0 }} cover={<img src={item.artist.picture} style={{height: "160px"}}/>}>
+                        <Card bodyStyle={{textAlign:"left"}} style={{marginLeft:"30px", marginTop:"20px",width: 160, backgroundColor: 'rgba(255, 255, 255, 0.0)', border: 0 }} cover={<img src={item.artist.picture_medium} style={{height: "160px"}}/>}>
                             <Link className="link-songlist" to={`/artist/${item.artist.id}`}>{item.artist.name}</Link>
                             <br/>
                             <span style={{ fontSize:"1em", color:"#b6b8b6", }}>{item.title}</span>
